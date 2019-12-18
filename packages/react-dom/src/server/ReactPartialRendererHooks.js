@@ -473,6 +473,14 @@ function useTransition(
   return [startTransition, false];
 }
 
+function useEvent(options: any): any {
+  return {
+    clear: noop,
+    deleteListener: noop,
+    setListener: noop,
+  };
+}
+
 function noop(): void {}
 
 export let currentThreadID: ThreadID = 0;
@@ -499,4 +507,5 @@ export const Dispatcher: DispatcherType = {
   useResponder,
   useDeferredValue,
   useTransition,
+  useEvent,
 };
