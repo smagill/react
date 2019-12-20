@@ -53,7 +53,10 @@ import {
 } from 'legacy-events/EventPropagators';
 import ReactVersion from 'shared/ReactVersion';
 import invariant from 'shared/invariant';
-import {exposeConcurrentModeAPIs} from 'shared/ReactFeatureFlags';
+import {
+  exposeConcurrentModeAPIs,
+  enableListenerAPI,
+} from 'shared/ReactFeatureFlags';
 
 import {
   getInstanceFromNode,
@@ -70,6 +73,7 @@ import {
   setAttemptHydrationAtCurrentPriority,
   queueExplicitHydrationTarget,
 } from '../events/ReactDOMEventReplaying';
+import {useEvent} from './ReactDOMEventListenerHooks';
 
 setAttemptSynchronousHydration(attemptSynchronousHydration);
 setAttemptUserBlockingHydration(attemptUserBlockingHydration);
@@ -191,6 +195,10 @@ if (exposeConcurrentModeAPIs) {
       queueExplicitHydrationTarget(target);
     }
   };
+}
+
+if (enableListenerAPI) {
+  ReactDOM.unstable_useEvent = useEvent;
 }
 
 const foundDevTools = injectIntoDevTools({

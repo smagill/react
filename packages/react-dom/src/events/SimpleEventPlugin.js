@@ -240,10 +240,7 @@ const SimpleEventPlugin: PluginModule<MouseEvent> & {
 } = {
   eventTypes: eventTypes,
 
-  getEventPriority(topLevelType: TopLevelType): EventPriority {
-    const config = topLevelEventsToDispatchConfig[topLevelType];
-    return config !== undefined ? config.eventPriority : ContinuousEvent;
-  },
+  getEventPriority,
 
   extractEvents: function(
     topLevelType: TopLevelType,
@@ -363,5 +360,10 @@ const SimpleEventPlugin: PluginModule<MouseEvent> & {
     return event;
   },
 };
+
+export function getEventPriority(topLevelType: TopLevelType): EventPriority {
+  const config = topLevelEventsToDispatchConfig[topLevelType];
+  return config !== undefined ? config.eventPriority : ContinuousEvent;
+}
 
 export default SimpleEventPlugin;
